@@ -1,4 +1,4 @@
-class Message {
+export class Message {
 	id: string;
 	content: string;
 	timestamp: Date;
@@ -11,5 +11,3 @@ class Message {
 		this.role = role;
 	}
 }
-
-export default Message;

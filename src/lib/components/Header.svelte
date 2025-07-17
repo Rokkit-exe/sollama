@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { MessageCircle, Settings } from 'lucide-svelte';
 	let isOpen = false;
 	let isDark = false;
 
@@ -18,19 +19,27 @@
 	}
 </script>
 
-<header class="sticky top-0 z-50 bg-white shadow-md dark:bg-gray-900">
-	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-		<div class="flex h-16 items-center justify-between">
+<header class="bg-white dark:bg-neutral-900">
+	<div class="mx-auto px-4">
+		<div class="flex h-10 items-center justify-between">
 			<!-- Logo -->
-			<a href="/" class="text-xl font-bold text-gray-900 dark:text-white">Sollama</a>
+			<a href="/" class="text-xl font-bold text-gray-900 hover:text-red-400 dark:text-white"
+				>Sollama</a
+			>
 
 			<!-- Desktop nav -->
 			<nav class="hidden space-x-6 md:flex">
-				<a href="/" class="text-gray-700 hover:text-blue-500 dark:text-gray-300">Home</a>
-				<a href="/about" class="text-gray-700 hover:text-blue-500 dark:text-gray-300">About</a>
-				<a href="/services" class="text-gray-700 hover:text-blue-500 dark:text-gray-300">Services</a
+				<a href="/" class="block flex flex-row text-gray-700 hover:text-red-400 dark:text-gray-300">
+					<MessageCircle class="mr-2 inline-block" />
+					<h2>Chat</h2>
+				</a>
+				<a
+					href="/settings"
+					class="block flex flex-row text-gray-700 hover:text-red-400 dark:text-gray-300"
 				>
-				<a href="/contact" class="text-gray-700 hover:text-blue-500 dark:text-gray-300">Contact</a>
+					<Settings class="mr-2 inline-block" />
+					<h2>Settings</h2>
+				</a>
 			</nav>
 
 			<!-- Toggle buttons -->
@@ -66,14 +75,14 @@
 	<!-- Mobile Menu -->
 	{#if isOpen}
 		<nav class="space-y-2 bg-white px-4 pb-4 md:hidden dark:bg-gray-900">
-			<a href="/" class="block text-gray-700 hover:text-blue-500 dark:text-gray-300">Home</a>
-			<a href="/about" class="block text-gray-700 hover:text-blue-500 dark:text-gray-300">About</a>
-			<a href="/services" class="block text-gray-700 hover:text-blue-500 dark:text-gray-300"
-				>Services</a
-			>
-			<a href="/contact" class="block text-gray-700 hover:text-blue-500 dark:text-gray-300"
-				>Contact</a
-			>
+			<a href="/" class="block text-gray-700 hover:text-red-400 dark:text-gray-300">
+				<MessageCircle class="mr-2 inline-block" />
+				<h2>Chat</h2>
+			</a>
+			<a href="/settings" class="block text-gray-700 hover:text-red-400 dark:text-gray-300">
+				<Settings class="mr-2 inline-block" />
+				<h2>Settings</h2>
+			</a>
 		</nav>
 	{/if}
 </header>
