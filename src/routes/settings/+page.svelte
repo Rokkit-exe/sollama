@@ -1,15 +1,10 @@
 <script lang="ts">
 	import Body from '$components/Body.svelte';
-	import Header from '$components/Header.svelte';
-	import SidePanel from '$components/SidePanel.svelte';
-	import CenterPanel from '$components/CenterPanel.svelte';
+	import LeftPanel from '$components/LeftPanel.svelte';
+	import RightPanel from '$lib/components/RightPanel.svelte';
 	import SettingPanel from '$lib/components/SettingPanel.svelte';
 </script>
 
-<Body>
-	<Header />
-	<div class="flex h-screen w-full flex-row">
-		<SidePanel />
-		<SettingPanel />
-	</div>
-</Body>
+<LeftPanel />
+<SettingPanel />
+<RightPanel />

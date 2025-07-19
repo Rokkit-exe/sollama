@@ -19,7 +19,7 @@
 	}
 </script>
 
-<header class="bg-white dark:bg-neutral-900">
+<header class="border-b-1 border-neutral-700 bg-white dark:bg-neutral-900">
 	<div class="mx-auto px-4">
 		<div class="flex h-10 items-center justify-between">
 			<!-- Logo -->
