@@ -39,8 +39,8 @@ export const chatsState = $state({
 			name: `Chat ${this.chats.length + 1}`,
 			messages: [],
 			selected: true,
-			createdAt: new Date(),
-			updatedAt: new Date()
+			created_at: new Date(),
+			model: 'llama3.2'
 		});
 		console.log(`Chat added: Chat ${this.chats.length}`);
 	},

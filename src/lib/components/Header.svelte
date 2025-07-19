@@ -23,24 +23,8 @@
 	<div class="mx-auto px-4">
 		<div class="flex h-10 items-center justify-between">
 			<!-- Logo -->
-			<a href="/" class="text-xl font-bold text-gray-900 hover:text-red-400 dark:text-white"
-				>Sollama</a
-			>
 
 			<!-- Desktop nav -->
-			<nav class="hidden space-x-6 md:flex">
-				<a href="/" class="block flex flex-row text-gray-700 hover:text-red-400 dark:text-gray-300">
-					<MessageCircle class="mr-2 inline-block" />
-					<h2>Chat</h2>
-				</a>
-				<a
-					href="/settings"
-					class="block flex flex-row text-gray-700 hover:text-red-400 dark:text-gray-300"
-				>
-					<Settings class="mr-2 inline-block" />
-					<h2>Settings</h2>
-				</a>
-			</nav>
 
 			<!-- Toggle buttons -->
 			<div class="flex items-center gap-3">
