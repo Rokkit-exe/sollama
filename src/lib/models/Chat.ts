@@ -5,6 +5,7 @@ export type Chat = {
 	id: string;
 	name: string;
 	model: string;
+	system_prompt: string;
 	files: AttachedFile[];
 	messages: ChatMessage[];
 	selected: boolean;

@@ -12,6 +12,7 @@ export const chatsState = $state({
 				id: crypto.randomUUID(),
 				name: 'Default Chat',
 				model: 'llama3.2:latest',
+				system_prompt: 'You are a helpful assistant.',
 				files: [],
 				messages: [],
 				selected: true,
@@ -48,6 +49,7 @@ export const chatsState = $state({
 		this.chats.push({
 			id: crypto.randomUUID(),
 			name: `Chat ${this.chats.length + 1}`,
+			system_prompt: 'You are a helpful assistant.',
 			messages: [],
 			files: [],
 			selected: true,
