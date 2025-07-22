@@ -1,6 +1,9 @@
 <script lang="ts">
 	import { chatsState } from '$lib/stores/chatsState.svelte';
 	import { Plus, X } from 'lucide-svelte';
+
+	let renamingId: string | null = null;
+	let tempName = '';
 </script>
 
 <div class="m-2 flex max-h-90/100 w-75 flex-col bg-neutral-900 p-2">
@@ -23,10 +26,34 @@
 				class={chat.selected
 					? 'group my-2 flex w-full items-center justify-between rounded-lg bg-neutral-700 p-2 text-gray-50 transition hover:bg-neutral-700'
 					: 'group my-2 flex w-full items-center justify-between rounded-lg bg-neutral-900 p-2 text-gray-50 transition hover:bg-neutral-700'}
-				class:bg-blue-600={chat.selected}
 				on:click={() => chatsState.select(chat.id)}
+				on:dblclick={() => {
+					renamingId = chat.id;
+					tempName = chat.name;
+				}}
 			>
-				<h3>{chat.name}</h3>
+				{#if renamingId === chat.id}
+					<input
+						class="w-full border-b border-neutral-500 bg-transparent text-left text-gray-50 outline-none"
+						maxlength="25"
+						bind:value={tempName}
+						on:blur={() => {
+							chatsState.rename(chat.id, tempName);
+							renamingId = null;
+						}}
+						on:keydown={(e) => {
+							if (e.key === 'Enter') {
+								chatsState.rename(chat.id, tempName);
+								renamingId = null;
+							} else if (e.key === 'Escape') {
+								renamingId = null;
+							}
+						}}
+						autofocus
+					/>
+				{:else}
+					<h3>{chat.name}</h3>
+				{/if}
 				<X
 					class="h-5 w-5 text-red-400 opacity-0 transition-opacity
              duration-150 group-hover:opacity-100"

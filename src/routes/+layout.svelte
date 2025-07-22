@@ -3,6 +3,7 @@
 	import { chatsState } from '$lib/stores/chatsState.svelte';
 	import Header from '$components/Header.svelte';
 	import Footer from '$lib/components/Footer.svelte';
+
 	let { children } = $props();
 	chatsState.init();
 </script>

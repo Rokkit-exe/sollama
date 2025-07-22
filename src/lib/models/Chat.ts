@@ -1,10 +1,12 @@
-import type { Message } from '$lib/models/Message';
+import type { ChatMessage } from '$lib/models/ChatMessage';
+import type { AttachedFile } from './AttachedFile';
 
 export type Chat = {
 	id: string;
 	name: string;
 	model: string;
-	messages: Message[];
+	files: AttachedFile[];
+	messages: ChatMessage[];
 	selected: boolean;
 	created_at: Date;
 };

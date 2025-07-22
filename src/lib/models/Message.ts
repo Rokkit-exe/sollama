@@ -1,6 +1,6 @@
+import type { Role } from './Role';
+
 export type Message = {
-	id: string;
 	content: string;
-	timestamp: Date;
-	role: string;
+	role: Role;
 };

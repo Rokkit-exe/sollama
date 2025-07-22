@@ -1,2 +1,9 @@
 @import 'tailwindcss';
+
 @plugin '@tailwindcss/typography';
+
+@tailwind base;
+
+.markdown-body {
+	@apply rounded-lg px-2 py-4 text-neutral-200;
+}
