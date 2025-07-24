@@ -78,30 +78,29 @@
 			bind:value={textInput}
 			bind:this={textareaRef}
 			placeholder="Type a message..."
-			class="field-sizing-content w-full rounded-lg bg-neutral-700 p-2 text-gray-50 focus:ring-1 focus:ring-red-400 focus:outline-none"
 			onkeydown={onKeydown}
 		></textarea>
 		<button
-			class="m-1 p-1"
+			class="default-button"
 			onclick={() => {
 				sendMessage();
 				textInput = '';
-			}}><Send class="h-6 w-6 text-red-400 hover:text-red-200"></Send></button
+			}}
 		>
+			<Send class="icon" />
+		</button>
 	</div>
 	<div class="mx-2 mt-2 flex w-full flex-row">
 		<button
-			class={search
-				? 'mx-2 flex rounded-lg bg-neutral-700 p-1 hover:bg-neutral-700'
-				: 'mx-2 flex rounded-lg  p-1 hover:bg-neutral-700'}
+			class={search ? 'selected-button mr-2' : 'select-button mr-2'}
 			onclick={() => (search = !search)}
 		>
-			<Globe class="mr-1 h-6 w-6 text-red-400" />
-			<span>Search</span>
+			<Globe class="icon mr-1" />
+			<label for="select-button">Search</label>
 		</button>
-		<button class="mx-2 flex rounded-lg p-1 hover:bg-neutral-700">
-			<Paperclip class="mr-1 h-6 w-6 text-red-400" />
-			<label for="file-upload" class="cursor-pointer"> Attach </label>
+		<button class="select-button mr-2">
+			<Paperclip class="icon mr-1" />
+			<label for="file-upload"> Attach </label>
 			<input
 				id="file-upload"
 				type="file"

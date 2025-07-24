@@ -12,10 +12,14 @@
 	>
 	<div class="flex flex-row items-center justify-between border-b border-neutral-700 p-2">
 		<h2 class="font-3xl font-bold text-gray-50">Chats</h2>
-		<Plus
-			class="h-7 w-7 cursor-pointer text-red-400 hover:rounded-lg hover:bg-neutral-700"
-			onclick={() => chatsState.add()}
-		/>
+		<button
+			class="default-button"
+			onclick={() => {
+				chatsState.add();
+			}}
+		>
+			<Plus class="icon" />
+		</button>
 	</div>
 	<div class="flex max-h-90/100 flex-col overflow-y-scroll p-2">
 		{#if chatsState.chats.length === 0}
@@ -23,25 +27,22 @@
 		{/if}
 		{#each chatsState.chats as chat}
 			<button
-				class={chat.selected
-					? 'group my-2 flex w-full items-center justify-between rounded-lg bg-neutral-700 p-2 text-gray-50 transition hover:bg-neutral-700'
-					: 'group my-2 flex w-full items-center justify-between rounded-lg bg-neutral-900 p-2 text-gray-50 transition hover:bg-neutral-700'}
-				on:click={() => chatsState.select(chat.id)}
-				on:dblclick={() => {
+				class={chat.selected ? 'selected-button group' : 'select-button group'}
+				onclick={() => chatsState.select(chat.id)}
+				ondblclick={() => {
 					renamingId = chat.id;
 					tempName = chat.name;
 				}}
 			>
 				{#if renamingId === chat.id}
 					<input
-						class="w-full border-b border-neutral-500 bg-transparent text-left text-gray-50 outline-none"
 						maxlength="25"
 						bind:value={tempName}
-						on:blur={() => {
+						onblur={() => {
 							chatsState.rename(chat.id, tempName);
 							renamingId = null;
 						}}
-						on:keydown={(e) => {
+						onkeydown={(e) => {
 							if (e.key === 'Enter') {
 								chatsState.rename(chat.id, tempName);
 								renamingId = null;
@@ -49,13 +50,12 @@
 								renamingId = null;
 							}
 						}}
-						autofocus
 					/>
 				{:else}
 					<h3>{chat.name}</h3>
 				{/if}
 				<X
-					class="h-5 w-5 text-red-400 opacity-0 transition-opacity
+					class="icon opacity-0 transition-opacity
              duration-150 group-hover:opacity-100"
 					onclick={(e) => {
 						e.stopPropagation();

@@ -7,3 +7,43 @@
 .markdown-body {
 	@apply rounded-lg px-2 py-4 text-neutral-200;
 }
+
+.default-button {
+	@apply mr-2 cursor-pointer rounded-lg bg-neutral-900 p-2 text-red-400 hover:bg-neutral-700;
+}
+
+.select-button {
+	@apply flex cursor-pointer items-center justify-between rounded-lg bg-neutral-900 p-2 text-gray-50 hover:bg-neutral-700;
+}
+
+.selected-button {
+	@apply flex cursor-pointer items-center justify-between rounded-lg bg-neutral-700 p-2 text-gray-50 hover:bg-neutral-700;
+}
+
+input {
+	@apply mr-2 w-100 rounded-lg bg-neutral-700 p-2 text-gray-50 focus:ring-2 focus:ring-red-400 focus:outline-none;
+}
+
+textarea {
+	@apply mr-2 w-full rounded-lg bg-neutral-700 p-2 text-gray-300 focus:border-red-400 focus:ring-2 focus:ring-red-400 focus:outline-none;
+}
+
+label {
+	@apply block text-gray-50;
+}
+
+select {
+	@apply mr-2 rounded-lg bg-neutral-700 p-2 text-gray-50 focus:ring-2 focus:ring-red-400 focus:outline-none;
+}
+
+a {
+	@apply block flex flex-row text-gray-50 hover:text-red-400;
+}
+
+.form-input {
+	@apply my-4 flex flex-col;
+}
+
+.icon {
+	@apply h-6 w-6 cursor-pointer rounded-lg text-red-400 hover:bg-neutral-700;
+}

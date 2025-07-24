@@ -5,51 +5,60 @@
 	import { ollama } from '$lib/utils/ollama';
 	import { onMount } from 'svelte';
 	import RotateCcw from 'lucide-svelte/icons/rotate-ccw';
-	import { chatsState } from '$lib/stores/chatsState.svelte';
 	let removeModel = $state<string>('');
 	let downloadModel = $state<string>('');
+
+	const handleRemoveModel = () => {
+		if (!removeModel) {
+			alert('Please enter a model name to download.');
+			return;
+		}
+		ollama.deleteModel(removeModel);
+		modelsState.refresh();
+	};
+
+	const handleDownloadModel = () => {
+		if (!downloadModel) {
+			alert('Please enter a model name to download.');
+			return;
+		}
+		ollama.pullModel(downloadModel);
+	};
+
+	const handleSave = () => {
+		console.log('Settings saved:', settingsState.ollama);
+	};
 
 	onMount(() => {
 		modelsState.refresh();
 	});
 </script>
 
-<div class="my-4 flex flex-col">
-	<label for="ollamaHost" class="mr-2 mb-2 block w-1/3">Host</label>
+<div class="form-input">
+	<label for="ollamaHost">Ollama Host</label>
+	<input type="text" id="ollamaHost" bind:value={settingsState.ollama.host} />
+</div>
+<div class="form-input">
+	<label for="defaultModel">Default Model</label>
+	<input type="text" id="defaultModel" bind:value={settingsState.ollama.DefaultModel} />
+</div>
+<label for="thinking" class="flex cursor-pointer flex-row items-center">
+	<span class="mb-2">Thinking</span>
 	<input
-		type="text"
-		id="ollamaHost"
-		bind:value={settingsState.ollama.host}
-		class="w-100 rounded-lg bg-neutral-700 p-2 text-gray-50 focus:ring-2 focus:ring-red-400 focus:outline-none"
+		id="thinking"
+		type="checkbox"
+		bind:value={settingsState.ollama.isThinking}
+		class="peer sr-only"
 	/>
-</div>
-<div class="my-4 flex flex-col">
-	<label for="ollamaModel" class="mr-2 mb-2 block w-1/3">Default Model</label>
-	<input
-		type="text"
-		id="ollamaModel"
-		bind:value={settingsState.ollama.defaultModel}
-		class="w-100 rounded-lg bg-neutral-700 p-2 text-gray-50 focus:ring-2 focus:ring-red-400 focus:outline-none"
-	/>
-</div>
-<div class="my-4 flex flex-col">
-	<label for="isThinking" class="mr-2 mb-2 w-1/3">Thinking</label>
-	<p class="text-gray-500">Abilety to reason (only for supported models)</p>
-	<button
-		class={settingsState.ollama.isThinking
-			? 'my-2 flex w-auto cursor-pointer rounded-lg bg-neutral-700 p-2 text-red-400 hover:bg-neutral-600'
-			: ' my-2 flex w-auto cursor-pointer rounded-lg bg-neutral-800 p-2 text-red-400 hover:bg-neutral-700'}
-		onclick={() => {
-			settingsState.ollama.isThinking = !settingsState.ollama.isThinking;
-		}}>{settingsState.ollama.isThinking}</button
-	>
-</div>
-<div class="my-4 flex w-full flex-col">
-	<p class="text-gray-400">Default System Prompt</p>
+	<div
+		class="peer relative h-6 w-11 rounded-full bg-neutral-700 peer-checked:bg-red-400 peer-focus:ring-2 peer-focus:ring-red-400 peer-focus:outline-none after:absolute after:start-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-neutral-700 after:bg-white after:transition-all after:content-[''] peer-checked:after:translate-x-full peer-checked:after:border-gray-50 rtl:peer-checked:after:-translate-x-full"
+	></div>
+</label>
+<div class="form-input">
+	<label for="system-prompt">Default System Prompt</label>
 	<textarea
 		name="system-prompt"
 		id="system-prompt"
-		class="w-full rounded-lg bg-neutral-700 p-2 text-gray-300 focus:border-red-400 focus:ring-2 focus:ring-red-400 focus:outline-none"
 		placeholder="Enter system prompt here..."
 		bind:value={settingsState.ollama.defaultSystemPrompt}
 		rows="3"
@@ -57,68 +66,42 @@
 	>
 	</textarea>
 </div>
-<div class="my-4 flex w-full flex-col">
-	<label for="downloadModel" class="block w-1/3">Remove model</label>
+<div class="form-input">
+	<label for="downloadModel">Remove model</label>
 	<div class="flex w-full flex-row items-center">
-		<select
-			bind:value={removeModel}
-			placeholder="Select a model"
-			class="rounded-lg bg-neutral-700 p-2 text-gray-50 focus:ring-1 focus:ring-red-400 focus:outline-none"
-		>
+		<select bind:value={removeModel} placeholder="Select a model">
 			{#each modelsState.models as model}
-				<option value={model.name} class="bg-neutral-800">{model.name}</option>
+				<option value={model.model} class="bg-neutral-800">{model.model}</option>
 			{/each}
 		</select>
+		<button class="default-button" onclick={() => handleRemoveModel()}>Remove</button>
 		<button
-			class="m-2 flex cursor-pointer rounded-lg bg-neutral-700 p-2 text-red-400 hover:bg-neutral-600 hover:text-gray-50"
-			onclick={() => {
-				if (!removeModel) {
-					alert('Please enter a model name to download.');
-					return;
-				}
-				ollama.deleteModel(removeModel);
-				modelsState.refresh();
-			}}>Remove</button
-		>
-		<RotateCcw
-			class="h-10 w-10 cursor-pointer rounded-lg bg-neutral-700 p-2 text-red-400 hover:bg-neutral-600 hover:text-gray-50"
+			class="default-button"
 			onclick={() => {
 				modelsState.refresh();
 			}}
-		/>
+		>
+			<RotateCcw class="icon" />
+		</button>
 	</div>
 </div>
-<div class="my-4 flex w-full flex-col items-center">
+<div class="form-input">
 	<div class="flex w-full flex-col">
-		<label for="downloadModel" class="block w-1/3">Download Model</label>
-		<div class="my-4 flex w-full flex-row items-center">
+		<label for="downloadModel">Download Model</label>
+		<div class="mb-2 flex w-full flex-row items-center">
 			<input
 				type="text"
 				id="downloadModel"
 				placeholder="Enter model name to download"
 				bind:value={downloadModel}
-				class="w-100 rounded-lg bg-neutral-700 p-2 text-gray-50 focus:ring-2 focus:ring-red-400 focus:outline-none"
 			/>
-			<button
-				class="mx-2 flex cursor-pointer rounded-lg bg-neutral-700 p-2 text-red-400 hover:bg-neutral-600 hover:text-gray-50"
-				onclick={() => {
-					if (!downloadModel) {
-						alert('Please enter a model name to download.');
-						return;
-					}
-					ollama.pullModel(downloadModel);
-				}}
-			>
-				Download
-			</button>
+			<button class="default-button" onclick={() => handleDownloadModel()}>Download</button>
 		</div>
 	</div>
 	<div class="flex w-full flex-row items-center justify-between">
-		<p class="text-gray-400">Download Status:</p>
+		<p class="text-gray-400">Status:</p>
 		{#if pullingState.isPulling()}
 			<p class="text-red-400">{pullingState.state.status}</p>
-		{:else}
-			<p class="text-gray-50">no download</p>
 		{/if}
 	</div>
 	<div class="flex w-full flex-row items-center justify-between">
@@ -135,9 +118,5 @@
 </div>
 
 <div class="flex w-full justify-end">
-	<button
-		class="m-2 flex cursor-pointer rounded-lg bg-neutral-700 p-2 text-red-400 hover:bg-neutral-600 hover:text-gray-50"
-	>
-		Save
-	</button>
+	<button class="default-button" onclick={() => handleSave()}>Save</button>
 </div>

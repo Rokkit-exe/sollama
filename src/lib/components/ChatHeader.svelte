@@ -6,7 +6,7 @@
 	onMount(() => {
 		modelsState.refresh();
 		if (!chatsState.selected.model) {
-			chatsState.selected.model = modelsState.models[0].name;
+			chatsState.selected.model = modelsState.models[0].model;
 		}
 		setInterval(() => {
 			modelsState.refresh();
@@ -24,43 +24,36 @@
 			bind:value={chatsState.selected.model}
 		>
 			{#each modelsState.models as model}
-				<option value={model.name} class="bg-neutral-800">{model.name}</option>
+				<option value={model.model} class="bg-neutral-800">{model.model}</option>
 			{/each}
 		</select>
-		<RotateCcw
-			class="m-2 ml-2 h-8 w-8 cursor-pointer rounded-lg p-1 text-red-400 hover:bg-neutral-700"
+		<button
+			class="default-button"
 			onclick={() => {
 				modelsState.refresh();
 			}}
-		/>
+		>
+			<RotateCcw class="icon" />
+		</button>
 		{#if modelsState.loadedModel !== '' && chatsState.selected.model === modelsState.loadedModel}
-			<Check class="m-2 ml-2 h-8 w-8 p-1 text-red-400" />
+			<button class="default-button">
+				<Check class="icon" />
+			</button>
 		{:else}
-			<Loader
-				class={modelsState.isLoading && modelsState.loadedModel === ''
-					? 'm-2 ml-2 h-8 w-8 animate-spin cursor-pointer rounded-lg p-1 text-red-400'
-					: 'm-2 ml-2 h-8 w-8 cursor-pointer rounded-lg p-1 text-red-400 hover:bg-neutral-700'}
+			<button
+				class="default-button"
 				onclick={() => {
 					if (chatsState.selected.model) {
 						modelsState.loadModel(chatsState.selected.model);
 					}
 				}}
-			/>
+			>
+				<Loader
+					class={modelsState.isLoading && modelsState.loadedModel === ''
+						? 'icon animate-spin'
+						: 'icon '}
+				/>
+			</button>
 		{/if}
 	</div>
 </div>
-
-<style>
-	.spin {
-		animation: spin 0.5s linear infinite;
-	}
-
-	@keyframes spin {
-		from {
-			transform: rotate(0deg);
-		}
-		to {
-			transform: rotate(360deg);
-		}
-	}
-</style>
