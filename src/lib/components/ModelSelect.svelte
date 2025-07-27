@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { RotateCcw, Check, Loader } from 'lucide-svelte';
-	import { chatsState } from '$lib/stores/chatsState.svelte';
-	import { modelsState } from '$lib/stores/modelsState.svelte';
+	import { chatsState } from '$stores/chatsState.svelte';
+	import { modelsState } from '$stores/modelsState.svelte';
 	import { onMount } from 'svelte';
-	import { settingsState } from '$lib/stores/settingsState.svelte';
+	import { settingsState } from '$stores/settingsState.svelte';
 
 	onMount(() => {
 		modelsState.refresh();

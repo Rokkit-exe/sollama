@@ -1,8 +1,6 @@
 <script lang="ts">
 	import '../app.css';
-	import { chatsState } from '$lib/stores/chatsState.svelte';
-	import Header from '$components/Header.svelte';
-	import Footer from '$lib/components/Footer.svelte';
+	import { chatsState } from '$stores/chatsState.svelte';
 
 	let { children } = $props();
 	chatsState.init();

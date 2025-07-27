@@ -1,22 +1,13 @@
 <script lang="ts">
-	import { chatsState } from '$lib/stores/chatsState.svelte';
-	import { Plus, X, Settings, Bot } from 'lucide-svelte';
-
+	import { chatsState } from '$stores/chatsState.svelte';
+	import { Plus, X } from 'lucide-svelte';
+	import NavBar from '$components/NavBar.svelte';
 	let renamingId: string | null = null;
 	let tempName = '';
 </script>
 
 <div class="flex h-screen w-75 min-w-75 flex-col border-r-1 border-neutral-700 bg-neutral-900 pb-2">
-	<nav
-		class="my-4 flex flex-row items-center justify-between border-b border-neutral-700 px-2 pb-4"
-	>
-		<a href="/" title="Home">
-			<Bot class="mr-2" />
-		</a>
-		<a href="/settings" title="Settings">
-			<Settings class="mr-2" />
-		</a>
-	</nav>
+	<NavBar />
 	<div class="flex flex-row items-center justify-between p-2">
 		<h2 class="font-3xl font-bold text-gray-50">Chats</h2>
 		<button

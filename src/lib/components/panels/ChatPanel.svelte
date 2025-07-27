@@ -1,8 +1,8 @@
 <script lang="ts">
-	import InputArea from './InputArea.svelte';
-	import ChatMessages from './ChatMessages.svelte';
-	import ModelSelect from './ModelSelect.svelte';
-	import { chatsState } from '$lib/stores/chatsState.svelte';
+	import ChatControl from '$components/ChatControl.svelte';
+	import ChatMessages from '$components/ChatMessages.svelte';
+	import ModelSelect from '$components/ModelSelect.svelte';
+	import { chatsState } from '$stores/chatsState.svelte';
 </script>
 
 <div
@@ -15,7 +15,7 @@
 	</div>
 	<div class="flex w-3/4 flex-col overflow-y-scroll rounded-lg px-4">
 		<ChatMessages />
-		<InputArea />
+		<ChatControl />
 	</div>
 	<ModelSelect />
 </div>

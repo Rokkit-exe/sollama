@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { chatsState } from '$lib/stores/chatsState.svelte';
+	import { chatsState } from '$stores/chatsState.svelte';
+	import { modelsState } from '$stores/modelsState.svelte';
 	import { CircleUser, Bot } from 'lucide-svelte';
 	import { marked } from 'marked';
 	import hljs from 'highlight.js';
 	import 'highlight.js/styles/tokyo-night-dark.css'; // 🎨 change to any theme you like
 	import 'github-markdown-css/github-markdown-dark.css'; // for full markdown styling
-	import { modelsState } from '$lib/stores/modelsState.svelte';
 
 	const renderer = new marked.Renderer();
 

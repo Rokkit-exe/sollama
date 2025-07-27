@@ -1,5 +1,5 @@
-import type { Model } from '$lib/models/model';
-import type { Tool } from '$lib/models/Tool';
+import type { Model } from '$models/model';
+import type { Tool } from '$models/Tool';
 
 export const settingsState = $state({
 	selectedSection: 'ollama',

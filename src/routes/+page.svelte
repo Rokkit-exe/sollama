@@ -1,7 +1,7 @@
 <script lang="ts">
-	import LeftPanel from '$components/LeftPanel.svelte';
-	import CenterPanel from '$components/CenterPanel.svelte';
+	import ChatSidePanel from '$components/panels/ChatSidePanel.svelte';
+	import ChatPanel from '$components/panels/ChatPanel.svelte';
 </script>
 
-<LeftPanel />
-<CenterPanel />
+<ChatSidePanel />
+<ChatPanel />

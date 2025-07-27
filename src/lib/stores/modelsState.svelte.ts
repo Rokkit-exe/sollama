@@ -1,5 +1,5 @@
-import type { Model } from '$lib/models/model';
-import { ollama } from '$lib/utils/ollama';
+import type { Model } from '$models/model';
+import { ollama } from '$utils/ollama';
 
 export const modelsState = $state({
 	models: [] as Model[],

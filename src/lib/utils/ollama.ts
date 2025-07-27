@@ -1,9 +1,9 @@
-import { chatsState } from '$lib/stores/chatsState.svelte';
-import type { StreamedResponse } from '$lib/models/StreamedResponse';
-import type { Model } from '$lib/models/model';
-import { pullingState } from '$lib/stores/pullingState.svelte';
-import type { PullResponse } from '$lib/models/PullResponse';
-import { modelsState } from '$lib/stores/modelsState.svelte';
+import { chatsState } from '$stores/chatsState.svelte';
+import type { StreamedResponse } from '$models/StreamedResponse';
+import type { Model } from '$models/model';
+import { pullingState } from '$stores/pullingState.svelte';
+import type { PullResponse } from '$models/PullResponse';
+import { modelsState } from '$stores/modelsState.svelte';
 
 export const ollama = {
 	async getModels(): Promise<Model[]> {

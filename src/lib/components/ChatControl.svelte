@@ -1,9 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { Globe, Paperclip, Send, File, X, Settings, Pencil } from 'lucide-svelte';
-	import { chatsState } from '$lib/stores/chatsState.svelte';
-	import { ollama } from '$lib/utils/ollama';
-	import Overlay from './Overlay.svelte';
+	import { Globe, Paperclip, Send, File, X, Pencil } from 'lucide-svelte';
+	import { chatsState } from '$stores/chatsState.svelte';
+	import { ollama } from '$utils/ollama';
 
 	let search = $state<boolean>(false);
 	let textareaRef: HTMLTextAreaElement | null = null;

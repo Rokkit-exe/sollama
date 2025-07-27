@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { settingsState } from '$lib/stores/settingsState.svelte';
-	import OllamaSection from './OllamaSection.svelte';
-	import SearxngSection from './SearxngSection.svelte';
+	import { settingsState } from '$stores/settingsState.svelte';
+	import OllamaSection from '$components/OllamaSection.svelte';
+	import SearxngSection from '$components/SearxngSection.svelte';
 </script>
 
 <div

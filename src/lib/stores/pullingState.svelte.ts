@@ -1,4 +1,4 @@
-import type { PullResponse } from '$lib/models/PullResponse';
+import type { PullResponse } from '$models/PullResponse';
 
 export const pullingState = $state({
 	state: {

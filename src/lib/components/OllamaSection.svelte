@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { modelsState } from '$lib/stores/modelsState.svelte';
-	import { pullingState } from '$lib/stores/pullingState.svelte';
-	import { settingsState } from '$lib/stores/settingsState.svelte';
-	import { ollama } from '$lib/utils/ollama';
+	import { modelsState } from '$stores/modelsState.svelte';
+	import { pullingState } from '$stores/pullingState.svelte';
+	import { settingsState } from '$stores/settingsState.svelte';
+	import { ollama } from '$utils/ollama';
 	import { onMount } from 'svelte';
 	import RotateCcw from 'lucide-svelte/icons/rotate-ccw';
-	import Toggle from '$lib/components/Toggle.svelte';
+	import Toggle from '$components/Toggle.svelte';
 	let removeModel = $state<string>('');
 	let downloadModel = $state<string>('');
 

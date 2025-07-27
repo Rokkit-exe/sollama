@@ -1,7 +1,7 @@
 <script>
 	let { isMenuOpen } = $props();
 	import { X } from 'lucide-svelte';
-	import { chatsState } from '$lib/stores/chatsState.svelte';
+	import { chatsState } from '$stores/chatsState.svelte';
 </script>
 
 <div

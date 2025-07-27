@@ -14,6 +14,8 @@ export const chatsState = $state({
 				model: 'llama3.2:latest',
 				system_prompt: 'You are a helpful assistant.',
 				files: [],
+				isThinking: true,
+				tools: [],
 				messages: [],
 				selected: true,
 				created_at: new Date()
@@ -52,6 +54,8 @@ export const chatsState = $state({
 			system_prompt: 'You are a helpful assistant.',
 			messages: [],
 			files: [],
+			isThinking: true,
+			tools: [],
 			selected: true,
 			created_at: new Date(),
 			model: 'llama3.2:latest'

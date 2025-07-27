@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { settingsState } from '$lib/stores/settingsState.svelte';
+	import { settingsState } from '$stores/settingsState.svelte';
 </script>
 
 <div class="form-input">
