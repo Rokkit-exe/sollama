@@ -1,18 +1,23 @@
 <script lang="ts">
 	import InputArea from './InputArea.svelte';
-	import ChatHeader from './ChatHeader.svelte';
 	import ChatMessages from './ChatMessages.svelte';
+	import ModelSelect from './ModelSelect.svelte';
+	import { chatsState } from '$lib/stores/chatsState.svelte';
 </script>
 
 <div
-	class="mx-2 mx-auto flex h-auto flex-col justify-between rounded-lg p-2 text-gray-50 sm:px-6 md:w-3/4 lg:w-3/4 lg:px-2 xl:w-1/2"
+	class="mx-2 mx-auto flex h-screen w-full flex-row justify-between rounded-lg bg-neutral-900 p-2 text-gray-50"
 >
-	<!-- Chat Header -->
-	<ChatHeader />
-	<!-- Chat Messages -->
-	<ChatMessages />
-	<!-- Input and File Attachment -->
-	<InputArea />
+	<div class="w-1/4">
+		<h2 class="flex text-xl font-bold text-red-400">
+			{chatsState.selected.name}
+		</h2>
+	</div>
+	<div class="flex w-3/4 flex-col overflow-y-scroll rounded-lg px-4">
+		<ChatMessages />
+		<InputArea />
+	</div>
+	<ModelSelect />
 </div>
 
 <style>

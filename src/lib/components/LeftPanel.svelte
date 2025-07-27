@@ -1,18 +1,26 @@
 <script lang="ts">
 	import { chatsState } from '$lib/stores/chatsState.svelte';
-	import { Plus, X } from 'lucide-svelte';
+	import { Plus, X, Settings, Bot } from 'lucide-svelte';
 
 	let renamingId: string | null = null;
 	let tempName = '';
 </script>
 
-<div class="m-2 flex max-h-90/100 w-75 flex-col bg-neutral-900 p-2">
-	<a href="/" class="mb-2 text-xl font-bold text-gray-900 hover:text-red-400 dark:text-white"
-		>Sollama</a
+<div class="flex h-screen w-75 min-w-75 flex-col border-r-1 border-neutral-700 bg-neutral-900 pb-2">
+	<nav
+		class="my-4 flex flex-row items-center justify-between border-b border-neutral-700 px-2 pb-4"
 	>
-	<div class="flex flex-row items-center justify-between border-b border-neutral-700 p-2">
+		<a href="/" title="Home">
+			<Bot class="mr-2" />
+		</a>
+		<a href="/settings" title="Settings">
+			<Settings class="mr-2" />
+		</a>
+	</nav>
+	<div class="flex flex-row items-center justify-between p-2">
 		<h2 class="font-3xl font-bold text-gray-50">Chats</h2>
 		<button
+			title="New Chat"
 			class="default-button"
 			onclick={() => {
 				chatsState.add();
@@ -27,7 +35,8 @@
 		{/if}
 		{#each chatsState.chats as chat}
 			<button
-				class={chat.selected ? 'selected-button group' : 'select-button group'}
+				title="Select {chat.name}"
+				class={chat.selected ? 'selected-button group mb-2' : 'select-button group mb-2'}
 				onclick={() => chatsState.select(chat.id)}
 				ondblclick={() => {
 					renamingId = chat.id;

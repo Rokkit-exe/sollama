@@ -5,6 +5,7 @@
 	import { ollama } from '$lib/utils/ollama';
 	import { onMount } from 'svelte';
 	import RotateCcw from 'lucide-svelte/icons/rotate-ccw';
+	import Toggle from '$lib/components/Toggle.svelte';
 	let removeModel = $state<string>('');
 	let downloadModel = $state<string>('');
 
@@ -35,27 +36,16 @@
 </script>
 
 <div class="form-input">
-	<label for="ollamaHost">Ollama Host</label>
+	<label for="ollamaHost" class="mb-2">Ollama Host</label>
 	<input type="text" id="ollamaHost" bind:value={settingsState.ollama.host} />
 </div>
 <div class="form-input">
-	<label for="defaultModel">Default Model</label>
+	<label for="defaultModel" class="mb-2">Default Model</label>
 	<input type="text" id="defaultModel" bind:value={settingsState.ollama.DefaultModel} />
 </div>
-<label for="thinking" class="flex cursor-pointer flex-row items-center">
-	<span class="mb-2">Thinking</span>
-	<input
-		id="thinking"
-		type="checkbox"
-		bind:value={settingsState.ollama.isThinking}
-		class="peer sr-only"
-	/>
-	<div
-		class="peer relative h-6 w-11 rounded-full bg-neutral-700 peer-checked:bg-red-400 peer-focus:ring-2 peer-focus:ring-red-400 peer-focus:outline-none after:absolute after:start-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-neutral-700 after:bg-white after:transition-all after:content-[''] peer-checked:after:translate-x-full peer-checked:after:border-gray-50 rtl:peer-checked:after:-translate-x-full"
-	></div>
-</label>
+<Toggle id="thinking" title="Thinking" checked={settingsState.ollama.isThinking} />
 <div class="form-input">
-	<label for="system-prompt">Default System Prompt</label>
+	<label for="system-prompt" class="mb-2">Default System Prompt</label>
 	<textarea
 		name="system-prompt"
 		id="system-prompt"
@@ -67,14 +57,14 @@
 	</textarea>
 </div>
 <div class="form-input">
-	<label for="downloadModel">Remove model</label>
+	<label for="downloadModel" class="mb-2">Remove model</label>
 	<div class="flex w-full flex-row items-center">
 		<select bind:value={removeModel} placeholder="Select a model">
 			{#each modelsState.models as model}
 				<option value={model.model} class="bg-neutral-800">{model.model}</option>
 			{/each}
 		</select>
-		<button class="default-button" onclick={() => handleRemoveModel()}>Remove</button>
+		<button class="default-button mr-2" onclick={() => handleRemoveModel()}>Remove</button>
 		<button
 			class="default-button"
 			onclick={() => {
@@ -87,7 +77,7 @@
 </div>
 <div class="form-input">
 	<div class="flex w-full flex-col">
-		<label for="downloadModel">Download Model</label>
+		<label for="downloadModel" class="mb-2">Download Model</label>
 		<div class="mb-2 flex w-full flex-row items-center">
 			<input
 				type="text"

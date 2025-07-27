@@ -6,4 +6,3 @@
 
 <NavSettingPanel />
 <SettingPanel />
-<RightPanel />

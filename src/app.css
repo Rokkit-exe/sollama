@@ -9,7 +9,7 @@
 }
 
 .default-button {
-	@apply mr-2 cursor-pointer rounded-lg bg-neutral-900 p-2 text-red-400 hover:bg-neutral-700;
+	@apply cursor-pointer rounded-lg bg-neutral-900 p-2 text-red-400 hover:bg-neutral-800;
 }
 
 .select-button {
@@ -17,23 +17,30 @@
 }
 
 .selected-button {
-	@apply flex cursor-pointer items-center justify-between rounded-lg bg-neutral-700 p-2 text-gray-50 hover:bg-neutral-700;
+	@apply flex cursor-pointer items-center justify-between rounded-lg bg-neutral-800 p-2 text-red-400 hover:bg-neutral-700;
+}
+
+.control-button {
+	@apply flex cursor-pointer items-center justify-between rounded-lg bg-neutral-800 p-2 text-gray-50 hover:bg-neutral-700 hover:text-red-400;
+}
+.control-button-selected {
+	@apply flex cursor-pointer items-center justify-between rounded-lg bg-neutral-700 p-2 text-gray-50 hover:bg-neutral-700 hover:text-red-400;
 }
 
 input {
-	@apply mr-2 w-100 rounded-lg bg-neutral-700 p-2 text-gray-50 focus:ring-2 focus:ring-red-400 focus:outline-none;
+	@apply mr-2 w-100 rounded-lg bg-neutral-800 p-2 text-gray-50 hover:bg-neutral-700 focus:bg-neutral-700 focus:ring-2 focus:ring-neutral-700 focus:outline-none;
 }
 
 textarea {
-	@apply mr-2 w-full rounded-lg bg-neutral-700 p-2 text-gray-300 focus:border-red-400 focus:ring-2 focus:ring-red-400 focus:outline-none;
+	@apply mr-2 w-full rounded-lg bg-neutral-800 p-2 text-gray-300 hover:bg-neutral-700 focus:border-neutral-800 focus:bg-neutral-800 focus:ring-1 focus:ring-neutral-800 focus:outline-none;
 }
 
 label {
-	@apply block text-gray-50;
+	@apply w-fit cursor-pointer text-gray-50;
 }
 
 select {
-	@apply mr-2 rounded-lg bg-neutral-700 p-2 text-gray-50 focus:ring-2 focus:ring-red-400 focus:outline-none;
+	@apply mr-2 rounded-lg bg-neutral-800 p-2 text-gray-50 hover:bg-neutral-700 focus:bg-neutral-700 focus:ring-1 focus:ring-neutral-700 focus:outline-none;
 }
 
 a {
@@ -45,5 +52,5 @@ a {
 }
 
 .icon {
-	@apply h-6 w-6 cursor-pointer rounded-lg text-red-400 hover:bg-neutral-700;
+	@apply h-6 w-6 cursor-pointer rounded-lg text-red-400;
 }

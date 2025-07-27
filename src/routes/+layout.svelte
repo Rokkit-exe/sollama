@@ -9,8 +9,7 @@
 </script>
 
 <div class="flex h-screen flex-col bg-neutral-900">
-	<main class="flex h-95/100 w-full flex-row bg-neutral-900">
+	<main class="flex h-screen w-full flex-row bg-neutral-900">
 		{@render children()}
 	</main>
-	<Footer />
 </div>

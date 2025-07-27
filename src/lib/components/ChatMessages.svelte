@@ -19,7 +19,7 @@
 	marked.setOptions({ renderer });
 </script>
 
-<div class="flex h-3/4 w-full flex-col overflow-y-scroll p-2">
+<div class="flex h-full w-full flex-col overflow-y-scroll p-2">
 	{#if chatsState.selected.messages.length === 0}
 		<p class="text-center text-gray-500">Start the conversation!</p>
 	{/if}
@@ -32,10 +32,10 @@
 						<span>{msg.role}</span>
 					</div>
 					<div class="ml-2 text-xs text-gray-700">
-						{msg.timestamp ? new Date(msg.timestamp).toLocaleTimeString() : ''}
+						{msg.created_at ? new Date(msg.created_at).toLocaleTimeString() : ''}
 					</div>
 				</div>
-			{:else}
+			{:else if msg.role === 'assistant'}
 				<div class="flex flex-row items-center justify-between font-bold text-red-400">
 					<div>
 						<Bot class="mr-2 inline-block h-6 w-6" />
@@ -47,7 +47,7 @@
 						{/if}
 					</div>
 					<div class="ml-2 text-xs text-gray-700">
-						{msg.timestamp ? new Date(msg.timestamp).toLocaleTimeString() : ''}
+						{msg.created_at ? new Date(msg.created_at).toLocaleTimeString() : ''}
 					</div>
 				</div>
 			{/if}
