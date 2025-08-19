@@ -4,6 +4,7 @@ import type { Model } from '$models/model';
 import { pullingState } from '$stores/pullingState.svelte';
 import type { PullResponse } from '$models/PullResponse';
 import { modelsState } from '$stores/modelsState.svelte';
+import { Status } from '$lib/models/Status';
 
 export const ollama = {
 	async getModels(): Promise<Model[]> {
@@ -15,17 +16,19 @@ export const ollama = {
 			console.error('Failed to fetch models:', response.statusText);
 		}
 		const data = await response.json();
-		console.log('Models fetched:', data.models);
 		return data.models;
 	},
 	async Chat(content: string) {
+		if (!chatsState.selected || !chatsState.selected.id) {
+			console.error('No chat selected');
+			return;
+		}
 		chatsState.addMessage(chatsState.selected.id, content, 'user');
 		chatsState.addMessage(chatsState.selected.id, '', 'assistant');
 		if (!content.trim()) {
 			console.warn('Empty message, not sending');
 			return;
 		}
-		console.log('Sending message:', content);
 
 		const response = await fetch('http://192.168.0.100:10000/api/chat', {
 			method: 'POST',
@@ -49,7 +52,6 @@ export const ollama = {
 		while (true) {
 			const { done, value } = await reader.read();
 			if (done) {
-				console.log('Stream finished');
 				break;
 			}
 			let streamedResponse: StreamedResponse = JSON.parse(decoder.decode(value, { stream: true }));
@@ -57,16 +59,16 @@ export const ollama = {
 				streamedResponse.message?.content === '<thinking>' ||
 				streamedResponse.message?.content === '<think>'
 			) {
-				modelsState.isThinking = true;
+				modelsState.status = Status.Thinking;
 			} else if (
 				streamedResponse.message?.content === '</thinking>' ||
 				streamedResponse.message?.content === '</think>'
 			) {
-				modelsState.isThinking = false;
+				modelsState.status = Status.Generating;
 			}
-			if (!modelsState.isThinking) {
+			if (modelsState.status === Status.Generating) {
 				buffer += streamedResponse.message?.content || '';
-				chatsState.updateMessage(chatsState.selected.id, buffer);
+				chatsState.updateMessageContent(chatsState.selected.id, buffer);
 			}
 		}
 	},
@@ -80,14 +82,15 @@ export const ollama = {
 			return [];
 		}
 		const data = await response.json();
-		console.log('Loaded models fetched:', data.models);
 		return data.models;
 	},
 
 	async pullModel(model: string): Promise<void> {
 		const response = await fetch(`http://192.168.0.100:10000/api/pull`, {
 			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
+			headers: {
+				'Content-Type': 'application/json'
+			},
 			body: JSON.stringify({
 				model: model,
 				stream: true
@@ -97,7 +100,6 @@ export const ollama = {
 			console.error('Failed to pull model:', response.statusText);
 			throw new Error(`Failed to pull model: ${response.statusText}`);
 		}
-		console.log(`Pulling model: ${model}`);
 
 		const reader = response.body.getReader();
 		const decoder = new TextDecoder();
@@ -118,7 +120,6 @@ export const ollama = {
 				try {
 					const pullResponse: PullResponse = JSON.parse(line);
 					pullingState.update(pullResponse);
-					console.log('Pull response:', pullResponse);
 				} catch (err) {
 					console.warn('Failed to parse line:', line, err);
 				}
@@ -145,11 +146,9 @@ export const ollama = {
 			console.error('Failed to delete model:', response.statusText);
 			throw new Error(`Failed to delete model: ${response.statusText}`);
 		}
-		console.log(`Model ${model} deleted successfully`);
 		return Promise.resolve();
 	},
 	async loadModel(model: string): Promise<void> {
-		console.log(`Loading model: ${model}`);
 		const response = await fetch(`http://192.168.0.100:10000/api/generate`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
@@ -183,7 +182,6 @@ export const ollama = {
 			console.error('Failed to unload model:', response.statusText);
 			throw new Error(`Failed to unload model: ${response.statusText}`);
 		} else {
-			console.log(`Model ${model} unloaded successfully`);
 			modelsState.loadedModel = '';
 			return Promise.resolve();
 		}

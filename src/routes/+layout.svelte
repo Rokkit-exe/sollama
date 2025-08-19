@@ -1,9 +1,11 @@
 <script lang="ts">
 	import '../app.css';
 	import { chatsState } from '$stores/chatsState.svelte';
+	import { modelsState } from '$lib/stores/modelsState.svelte';
+	import { onMount } from 'svelte';
 
 	let { children } = $props();
-	chatsState.init();
+	modelsState.getModels();
 </script>
 
 <div class="flex h-screen flex-col bg-neutral-900">

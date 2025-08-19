@@ -5,7 +5,7 @@ export const settingsState = $state({
 	selectedSection: 'ollama',
 	ollama: {
 		host: 'http://192.168.0.100:10000',
-		DefaultModel: 'llama3.2:latest',
+		DefaultModel: 'mistral-nemo:latest',
 		models: [] as Model[],
 		defaultSystemPrompt: 'You are a helpful assistant.',
 		isThinking: true

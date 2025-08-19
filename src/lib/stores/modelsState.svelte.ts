@@ -1,49 +1,54 @@
+import { Status } from '$lib/models/Status';
 import type { Model } from '$models/model';
 import { ollama } from '$utils/ollama';
+import { chatsState } from './chatsState.svelte';
+import { settingsState } from './settingsState.svelte';
 
 export const modelsState = $state({
 	models: [] as Model[],
-	isThinking: false,
-	isLoading: false,
+	status: Status.NotLoaded,
+	statusDetails: '',
 	loadedModel: '' as string,
-	init(): void {
-		this.refresh();
-	},
-	async refresh(): Promise<void> {
-		try {
-			this.models = await ollama.getModels();
-			await this.getLoadedModel();
-		} catch (error) {
-			console.error('Failed to initialize models state:', error);
-		}
+	async getModels(): Promise<void> {
+		ollama
+			.getModels()
+			.then((models) => {
+				this.models = models;
+				if (chatsState.selected) {
+					chatsState.selected.model = settingsState.ollama.DefaultModel;
+				}
+			})
+			.catch((error) => {
+				console.error('Failed to fetch models:', error);
+				this.models = [];
+			});
 	},
 	async getLoadedModel() {
-		try {
-			ollama.getLoadedModels().then((models) => {
+		ollama
+			.getLoadedModels()
+			.then((models) => {
 				if (!models || models.length === 0) {
-					console.warn('No models loaded');
 					this.loadedModel = '';
 					return;
 				}
-				this.loadedModel = models[0].model || '';
-				console.log('Loaded model:', this.loadedModel);
+				this.loadedModel = settingsState.ollama.DefaultModel;
+			})
+			.catch((error) => {
+				console.error('Failed to fetch loaded model:', error);
+				this.loadedModel = '';
 			});
-		} catch (error) {
-			console.error('Failed to get loaded model:', error);
-			this.loadedModel = '';
-		}
 	},
 	async loadModel(model: string): Promise<void> {
 		try {
 			this.loadedModel = '';
-			this.isLoading = true;
+			this.status = Status.Loading;
 			ollama.loadModel(model).then(() => {
 				this.loadedModel = model;
-				this.isLoading = false;
+				this.status = Status.Idle;
 			});
 		} catch (error) {
 			console.error(`Failed to load model ${model}:`, error);
-			this.isLoading = false;
+			this.status = Status.NotLoaded;
 			throw new Error(`Failed to load model: ${error}`);
 		}
 	}

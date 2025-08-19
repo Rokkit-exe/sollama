@@ -3,6 +3,8 @@
 	import { Globe, Paperclip, Send, File, X, Pencil } from 'lucide-svelte';
 	import { chatsState } from '$stores/chatsState.svelte';
 	import { ollama } from '$utils/ollama';
+	import { agentRequest } from '$lib/utils/agentRequest';
+	import type { ChatRequest } from '$models/ChatRequest';
 
 	let search = $state<boolean>(false);
 	let textareaRef: HTMLTextAreaElement | null = null;
@@ -18,9 +20,7 @@
 		const content = textInput.trim();
 		if (!content) return;
 
-		// Send the message - e.g.:
-		ollama.Chat(content);
-
+		chatsState.Chat(chatsState.selected.id, textInput);
 		textInput = ''; // Clear input
 		textareaRef?.focus(); // Keep focus on textarea
 	}
@@ -47,8 +47,8 @@
 	function onKeydown(event: KeyboardEvent) {
 		if (event.key === 'Enter' && !event.shiftKey) {
 			event.preventDefault();
-			// Trigger the send action
-			ollama.Chat(textInput);
+			chatsState.Chat(chatsState.selected.id, textInput);
+			//ollama.Chat(textInput);
 			textInput = '';
 		}
 	}
@@ -56,22 +56,24 @@
 
 <div class="flex w-full flex-col rounded-lg bg-neutral-800">
 	<div class="mb-2 ml-2 flex w-full flex-row">
-		{#each chatsState.selected.files as file}
-			<div
-				class="group block flex flex-row items-center rounded-lg p-2 text-gray-50 transition hover:bg-neutral-700"
-			>
-				<File class="mr-2 inline-block h-6 w-6 text-red-400" />
-				{file.name}
-				<X
-					class="ml-2 inline-block h-6 w-6 cursor-pointer text-red-400 opacity-0 transition-opacity duration-150 group-hover:opacity-100 hover:text-red-200"
-					onclick={() => {
-						chatsState.selected.files = chatsState.selected.files.filter(
-							(f) => f.name !== file.name
-						);
-					}}
-				/>
-			</div>
-		{/each}
+		{#if chatsState.selected && chatsState.selected.files && chatsState.selected.files.length > 0}
+			{#each chatsState.selected.files as file}
+				<div
+					class="group block flex flex-row items-center rounded-lg p-2 text-gray-50 transition hover:bg-neutral-700"
+				>
+					<File class="mr-2 inline-block h-6 w-6 text-red-400" />
+					{file.name}
+					<X
+						class="ml-2 inline-block h-6 w-6 cursor-pointer text-red-400 opacity-0 transition-opacity duration-150 group-hover:opacity-100 hover:text-red-200"
+						onclick={() => {
+							chatsState.selected.files = chatsState.selected.files.filter(
+								(f) => f.name !== file.name
+							);
+						}}
+					/>
+				</div>
+			{/each}
+		{/if}
 	</div>
 	<div class="mt-2 flex w-full flex-col px-2">
 		<textarea

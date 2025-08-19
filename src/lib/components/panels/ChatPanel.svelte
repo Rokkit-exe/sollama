@@ -9,9 +9,11 @@
 	class="mx-2 mx-auto flex h-screen w-full flex-row justify-between rounded-lg bg-neutral-900 p-2 text-gray-50"
 >
 	<div class="w-1/4">
-		<h2 class="flex text-xl font-bold text-red-400">
-			{chatsState.selected.name}
-		</h2>
+		{#if chatsState.selected}
+			<h2 class="flex text-xl font-bold text-red-400">
+				{chatsState.selected.name}
+			</h2>
+		{/if}
 	</div>
 	<div class="flex w-3/4 flex-col overflow-y-scroll rounded-lg px-4">
 		<ChatMessages />

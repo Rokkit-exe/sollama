@@ -2,8 +2,12 @@
 	import { chatsState } from '$stores/chatsState.svelte';
 	import { Plus, X } from 'lucide-svelte';
 	import NavBar from '$components/NavBar.svelte';
+	import { onMount } from 'svelte';
 	let renamingId: string | null = null;
 	let tempName = '';
+	onMount(() => {
+		chatsState.init();
+	});
 </script>
 
 <div class="flex h-screen w-75 min-w-75 flex-col border-r-1 border-neutral-700 bg-neutral-900 pb-2">
@@ -27,7 +31,9 @@
 		{#each chatsState.chats as chat}
 			<button
 				title="Select {chat.name}"
-				class={chat.selected ? 'selected-button group mb-2' : 'select-button group mb-2'}
+				class={chat === chatsState.selected
+					? 'selected-button group mb-2'
+					: 'select-button group mb-2'}
 				onclick={() => chatsState.select(chat.id)}
 				ondblclick={() => {
 					renamingId = chat.id;
